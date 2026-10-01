@@ -1,4 +1,4 @@
-# Puffer Panic
+# Puffer Power
 
 A small sight-words reading game for early-elementary kids. A female voice asks
 "Which one spells &lt;word&gt;?", three flash cards show 1&ndash;4 letter Dolch sight
@@ -1315,7 +1315,7 @@ not one commit for everything) rather than a single catch-all commit, and
 reply to each review comment on GitHub referencing the specific commit
 hash that addressed it, formatted as a hyperlink to the commit rather than
 just backticked text (e.g. "Fixed in
-[abc1234](https://github.com/rchacon/puffer-panic/commit/abc1234).") -- keeps
+[abc1234](https://github.com/rchacon/puffer-app/commit/abc1234).") -- keeps
 the review thread traceable to the exact change that resolved it, one
 click away, rather than a generic "addressed" reply pointing at the whole
 PR.

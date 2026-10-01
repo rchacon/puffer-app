@@ -195,7 +195,7 @@ export default function App() {
 
   return (
     <div className="app">
-      <h1 className="app__title">Puffer Panic</h1>
+      <h1 className="app__title">Puffer Power</h1>
       <MuteButton muted={muted} onToggle={toggleMuted} />
 
       {state.phase === "start" ? (

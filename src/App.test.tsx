@@ -20,7 +20,7 @@ describe("App", () => {
 
   it("shows the title and a start button", () => {
     render(<App />);
-    expect(screen.getByText("Puffer Panic")).toBeInTheDocument();
+    expect(screen.getByText("Puffer Power")).toBeInTheDocument();
     expect(screen.getByRole("button", { name: /start/i })).toBeInTheDocument();
   });
 
@@ -346,6 +346,6 @@ describe("App - Hard Mode full playthrough", () => {
       });
     }
 
-    expect(screen.getByText(/PUFFER POWER/i)).toBeInTheDocument();
+    expect(screen.getByText("PUFFER POWER!")).toBeInTheDocument();
   });
 });
