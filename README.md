@@ -1,4 +1,4 @@
-# Puffer Panic
+# Puffer Power
 
 A tiny reading game for early elementary kids. A friendly voice asks **"Which one
 spells &lt;word&gt;?"** and three flash cards show 1&ndash;4 letter sight words. Pick the
