@@ -605,7 +605,7 @@ risk the Rocks-clearance tuning `AGENTS.md` notes elsewhere), capping
 same close-up crop that read as a disembodied neck at the *default*
 closest approach reads as a real threat 50 units short of it.
 
-The `FootballShark` is inserted right before the Megalodon in play
+The `FootballShark` is inserted right after the Swordfish in play
 order -- like the Dunkleosteus/Swordfish, it's a plain predator, not a
 boss fight: no `BOSS_INTROS` entry, no `PREDATOR_APPROACH` override,
 just the shared default linear approach. A cartoon shark restyled as an
@@ -747,7 +747,7 @@ round-by-round via headless Chrome that the shared linear approach still
 reads fine at this size, no early-contact or off-screen-runway issues to
 work around.
 
-The `Swordfish` is inserted right before the electric eels in play
+The `Swordfish` is inserted right after the Shark Princess's escort in play
 order -- like the Dunkleosteus, it's a plain predator, not a boss fight:
 no `BOSS_INTROS` entry, no intro card/music/voice line, and no
 `PREDATOR_APPROACH` override either, just the shared default linear
@@ -938,7 +938,7 @@ attributes, an id referenced from a `<style>` block, or a SMIL
 kraken.svg as they stand; check for those before reusing it on a
 differently-authored source file.
 
-The `GrandpaShark` is inserted right before the Mosasaurus in play
+The `GrandpaShark` is inserted right after the FootballShark in play
 order -- like the Swordfish/FootballShark, it's a plain predator, not a
 boss fight: no `BOSS_INTROS` entry, no `PREDATOR_APPROACH` override,
 just the shared default linear approach. A cartoon shark cast as a
