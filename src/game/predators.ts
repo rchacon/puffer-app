@@ -93,7 +93,7 @@ const PREDATOR_LEVEL_ENTRIES: Omit<PredatorLevel, "level">[] = [
     count: 3,
     // Order is also draw order (later = on top): the two brothers first
     // (smaller, tucked behind), the Princess last -- same position/scale
-    // (dx=0, dy=0, scale=1) as her solo level-3 appearance, not just
+    // (dx=0, dy=0, scale=1) as her solo appearance, not just
     // "full size" in the abstract, so the two actually look identical in
     // size. The brothers are small and spread further apart than the
     // first attempt at this: at a bigger scale/tighter spacing they

@@ -323,10 +323,7 @@ same absolute-scene-coordinates technique as `ShipWreck.tsx` -- positioned
 where the Megalodon's approach will eventually cover it, which is fine;
 the whole point of a boss this size is that it can.
 
-The Bloop is the third boss fight, inserted between the
-Anglerfish and the Kraken (originally between the eels and the
-Anglerfish -- levels 9 and 10 were swapped afterward, see the
-levels-shift note at the end of this section). Its artwork (`src/components/predators/Bloop.tsx`,
+The Bloop is the third boss fight. Its artwork (`src/components/predators/Bloop.tsx`,
 `src/assets/bloop.png`, user-provided) hit the same fake-transparency trap
 as SharkPrincess/Mosasaurus/Anglerfish before it (`im.mode == "RGB"`, the
 checkerboard baked into opaque near-white pixels, not a real alpha
@@ -415,23 +412,7 @@ creature-silhouette convention, since there's no "monster shape" to
 silhouette here; the recording itself, and what it actually looked like
 on a hydrophone, is the point.
 
-Levels 9-11 (`predators.test.ts` pins the count at exactly 11 rows,
-1-11, plus the `getPredatorLevel` cycle length) went through two rounds
-of `defeat-<level>.mp3`/`victory-<level>.mp3` regeneration. First, the
-Bloop's insertion: 9 said "The Bloop," 10 said the Anglerfish's own text
-(shifted down from 9), and 11 was a wholly new pair for the Kraken
-(shifted down from 10). Then levels 9 and 10 were swapped back (Bloop to
-10, Anglerfish to 9, Kraken staying put at 11) -- a second, smaller
-regeneration of just those two positions' text, back to what it said
-before the Bloop was ever inserted. Same "regenerate only the shifted
-positions, not a full `npm run audio:gen`" approach both times, per the
-"Reorder levels 5-8" commit.
-
-The Amargasaurus is the fourth boss fight, inserted between the
-Bloop and the Kraken (shifting the Kraken from level 11 to 12 --
-`predators.test.ts`'s level-count/cycle-length assertions and
-`App.test.tsx`'s Kraken-intro tests both had to move from 10/11
-playthroughs to 11/12). It's also the one deliberate departure from every
+The Amargasaurus is the fourth boss fight. It's also the one deliberate departure from every
 prior level's "ocean, predator swims at the puffer" formula: the Puffer's
 swept into a shallow lake instead, with land and a second, harmless
 Amargasaurus visible above the waterline -- the user's own reference point
@@ -605,9 +586,8 @@ risk the Rocks-clearance tuning `AGENTS.md` notes elsewhere), capping
 same close-up crop that read as a disembodied neck at the *default*
 closest approach reads as a real threat 50 units short of it.
 
-The `FootballShark` is inserted right after the Swordfish in play
-order -- like the Dunkleosteus/Swordfish, it's a plain predator, not a
-boss fight: no `BOSS_INTROS` entry, no `PREDATOR_APPROACH` override,
+The `FootballShark` -- like the Dunkleosteus/Swordfish -- is a plain
+predator, not a boss fight: no `BOSS_INTROS` entry, no `PREDATOR_APPROACH` override,
 just the shared default linear approach. A cartoon shark restyled as an
 American football (white laces down its back, a football helmet with a
 strand of seaweed and a starfish tucked under it), user-provided.
@@ -627,9 +607,8 @@ than a boss-fight predator's bigger 600px-wide source. ~2MB down to
 tips, same convention as every other toothed predator) was found the
 usual coordinate-grid-overlay way and anchored at the local origin.
 
-The Dunkleosteus is inserted right after the Megalodon --
-unlike the Amargasaurus/Bloop/Megalodon, it's a plain predator, not a
-boss fight: no `BOSS_INTROS` entry, no intro card/music/voice line, just
+The Dunkleosteus -- unlike the Amargasaurus/Bloop/Megalodon -- is a
+plain predator, not a boss fight: no `BOSS_INTROS` entry, no intro card/music/voice line, just
 a normal approaching creature like the Shark or Anglerfish, using the
 shared default linear approach (with one tuning override -- see the
 `PREDATOR_APPROACH.dunkleosteus` paragraph below).
@@ -703,7 +682,7 @@ reorders" below, which this level's own original insertion (before that
 refactor existed) was actually one of the two examples motivating in
 the first place.
 
-Level 3's `SharkPrincess` (`src/components/predators/SharkPrincess.tsx`) is a
+The `SharkPrincess` (`src/components/predators/SharkPrincess.tsx`) is a
 cheerful crowned whale shark, user-provided (not sourced/licensed the way the
 Kraken assets were -- verify provenance before reusing it anywhere else).
 `src/assets/shark-princess.png` is a processed derivative, not whatever file
@@ -747,8 +726,8 @@ round-by-round via headless Chrome that the shared linear approach still
 reads fine at this size, no early-contact or off-screen-runway issues to
 work around.
 
-The `Swordfish` is inserted right after the Shark Princess's escort in play
-order -- like the Dunkleosteus, it's a plain predator, not a boss fight:
+The `Swordfish` -- like the Dunkleosteus -- is a plain predator, not a
+boss fight:
 no `BOSS_INTROS` entry, no intro card/music/voice line, and no
 `PREDATOR_APPROACH` override either, just the shared default linear
 approach. `src/assets/swordfish.png` is a processed derivative of a
@@ -896,7 +875,7 @@ scale/centering math to land in the component's local coordinate space.
 End effect: everything in the scene fades into the dark except one glowing
 point, which is the point.
 
-Level 1/2's `Shark` (reused unmodified for level 2's two-shark school) is
+The `Shark` (reused unmodified for the two-shark school) is
 also vendored real vector art -- recolored to
 a great white: swapped its original two teal shades for grey (back/fins)
 and near-white (belly), same "swap the hex values" approach as the
@@ -938,9 +917,8 @@ attributes, an id referenced from a `<style>` block, or a SMIL
 kraken.svg as they stand; check for those before reusing it on a
 differently-authored source file.
 
-The `GrandpaShark` is inserted right after the FootballShark in play
-order -- like the Swordfish/FootballShark, it's a plain predator, not a
-boss fight: no `BOSS_INTROS` entry, no `PREDATOR_APPROACH` override,
+The `GrandpaShark` -- like the Swordfish/FootballShark -- is a plain
+predator, not a boss fight: no `BOSS_INTROS` entry, no `PREDATOR_APPROACH` override,
 just the shared default linear approach. A cartoon shark cast as a
 grandpa (flat cap, glasses, white eyebrows/mustache), reading an
 "OCEAN TIMES" newspaper that covers most of its mouth, user-provided.
@@ -965,21 +943,20 @@ instead (the newspaper's own top-left corner), same technique as the
 Swordfish's bill tip when the mouth itself isn't the visual "front" of
 a predator.
 
-The grandpa shark also gets mixed-kind levels right after its solo
+The grandpa shark also gets two mixed-kind levels besides its solo
 one. First, "The grandpa shark and the football shark" (`count: 2`,
 `kinds: ["footballshark", "grandpashark"]`). Unlike the Shark
 Princess's escort, the two are meant to read as equals, so there's no
 `offsets` override -- the generic same-size `getSchoolOffsets(2)` pair
 the two-shark level uses fits as-is. Grandpa is last in `kinds`, so he
-draws on top. A second pairing follows it the same way, "The grandpa
+draws on top. A second pairing works the same way, "The grandpa
 shark and the Shark Princess" (`kinds: ["sharkprincess",
 "grandpashark"]`, same generic pair formation, grandpa again on top).
 Both levels' `defeat-`/`victory-` clips were generated as one-offs like
 the Swordfish's.
 
-The `SeaSerpent` is inserted right before the Mosasaurus in play order
--- like the Swordfish/FootballShark/GrandpaShark, it's a plain
-predator, not a boss fight: no `BOSS_INTROS` entry, no
+The `SeaSerpent` -- like the Swordfish/FootballShark/GrandpaShark --
+is a plain predator, not a boss fight: no `BOSS_INTROS` entry, no
 `PREDATOR_APPROACH` override, just the shared default linear approach.
 A painterly (not flat cel-shaded, unlike most predators here) dragon-
 like sea serpent, teal scales with orange spine frills, roaring with a
@@ -1246,6 +1223,9 @@ in four independent parts:
    creature is enough) or pointed at `predators.ts`/`PREDATOR_LEVELS`
    instead of restating a number that's guaranteed to go stale on the
    next reorder.
+   The same goes for relative position ("inserted right after the
+   Swordfish") -- play order lives only in `PREDATOR_LEVEL_ENTRIES`, so
+   neither comments nor this file restate it.
 3. **Audio clips are keyed by the predator's own label, not its level.**
    `outcomeAudioCue()` in `outcome.ts` used to build
    `defeat-<level>.mp3`/`victory-<level>.mp3` straight from the numeric

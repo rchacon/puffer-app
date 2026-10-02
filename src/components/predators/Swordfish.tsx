@@ -1,8 +1,7 @@
 import swordfishArt from "../../assets/swordfish.png";
 
-// Inserted right before the electric eels in play order -- see
-// predators.ts (PREDATOR_LEVEL_ENTRIES) and AGENTS.md for provenance. A
-// plain predator, not a boss fight -- no BOSS_INTROS entry, just a
+// See predators.ts (PREDATOR_LEVEL_ENTRIES) and AGENTS.md for provenance.
+// A plain predator, not a boss fight -- no BOSS_INTROS entry, just a
 // normal approaching predator like Shark/Piranha/Anglerfish, following
 // the shared default linear approach with no PREDATOR_APPROACH override.
 //
