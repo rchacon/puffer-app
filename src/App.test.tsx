@@ -185,7 +185,7 @@ describe("App - predator escalation", () => {
     for (let i = 0; i < playthroughsBefore("bloop"); i++) playThroughOneGame();
 
     // No spoken voice line for this one (see BOSS_INTROS.bloop in
-    // App.tsx) -- just its own intro card; the round itself hasn't
+    // bossIntros.ts) -- just its own intro card; the round itself hasn't
     // started yet.
     fireEvent.click(screen.getByRole("button", { name: /start/i }));
     expect(screen.getByText(/loudest sound/i)).toBeInTheDocument();

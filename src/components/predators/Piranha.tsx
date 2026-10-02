@@ -7,7 +7,7 @@ import rawPiranhaArtwork from "../../assets/piranha.svg?raw";
 // other vendored asset, see vendoredSvg.ts.
 const piranhaArtwork = stripRootSvgDimensions(rawPiranhaArtwork);
 
-// Level 4's piranha (school of 4) -- a vendored illustration, not hand-drawn
+// The piranha school -- a vendored illustration, not hand-drawn
 // like Eel/Anglerfish/TapahCatfish/Mosasaurus. Recolored from its original
 // teal palette to a grey body + red belly (a red-bellied piranha,
 // Pygocentrus nattereri) -- see AGENTS.md for the source, license, and how

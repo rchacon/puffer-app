@@ -1,6 +1,6 @@
 import dunkleosteusArt from "../../assets/dunkleosteus.png";
 
-// Inserted right after the Megalodon in play order -- see predators.ts
+// See predators.ts
 // (PREDATOR_LEVEL_ENTRIES) and AGENTS.md for provenance. A real (if
 // long-extinct) armored fish, Dunkleosteus, not a boss fight -- no
 // BOSS_INTROS entry, just a normal approaching predator like

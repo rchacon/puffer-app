@@ -1,6 +1,6 @@
 import grandpaSharkArt from "../../assets/grandpa-shark.png";
 
-// Inserted right before the Mosasaurus in play order -- see predators.ts
+// See predators.ts
 // (PREDATOR_LEVEL_ENTRIES) and AGENTS.md for provenance. A plain
 // predator, not a boss fight -- no BOSS_INTROS entry, just a normal
 // approaching predator like Shark/Piranha/Anglerfish, following the

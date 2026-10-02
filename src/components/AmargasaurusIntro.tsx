@@ -16,7 +16,7 @@ const dinoParkIcon = stripRootSvgDimensions(rawDinoParkIcon);
 // tone rather than the Kraken's violent shake -- this line is delivered
 // with wonder, watching the herd, not shouted as a battle cry (the same
 // "Sam Neill watching the gallimimus herd" moment the user's own request
-// described -- see App.tsx's BOSS_INTROS.amargasaurus for the music/voice
+// described -- see bossIntros.ts's BOSS_INTROS.amargasaurus for the music/voice
 // side of that).
 export function AmargasaurusIntro() {
   return (

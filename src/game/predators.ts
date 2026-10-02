@@ -43,13 +43,15 @@ export interface PredatorLevel {
    *  is the one `kinds` doesn't need to repeat for every instance. */
   kind: PredatorKind;
   /** How many instances BattleScene renders (only >1 for a school -- the
-   *  two-shark level, the Shark Princess's escort, and the piranha/eel
-   *  schools below; everything else is a solo predator). */
+   *  two-shark level, the Shark Princess's escort, the grandpa shark's
+   *  two pairings, and the piranha/eel schools below; everything else is
+   *  a solo predator). */
   count: number;
   /**
    * Per-instance kind override, same length as `count`, for a level that
    * mixes creatures instead of rendering `count` copies of `kind` (the
-   * Shark Princess's two escort sharks). Omit for every plain same-kind
+   * Shark Princess's two escort sharks, the grandpa shark's pairings).
+   * Omit for every plain same-kind
    * school; BattleScene falls back to `count` copies of `kind` when this
    * isn't set.
    */
@@ -77,6 +79,14 @@ export interface PredatorLevel {
    * reef.
    */
   skipsReefDecor?: boolean;
+  /**
+   * A boss fight: plays this kind's title-card intro (bossIntros.ts's
+   * `BOSS_INTROS`) before round 1, and the shared boss music track instead
+   * of the plain one during its rounds. Set per level, not per kind, so a
+   * boss creature can still appear in a plain level. Omit (falsy) for
+   * every plain predator.
+   */
+  isBossFight?: boolean;
 }
 
 // 1-indexed position (`PredatorLevel.level`) is computed below from
@@ -91,7 +101,7 @@ const PREDATOR_LEVEL_ENTRIES: Omit<PredatorLevel, "level">[] = [
     count: 3,
     // Order is also draw order (later = on top): the two brothers first
     // (smaller, tucked behind), the Princess last -- same position/scale
-    // (dx=0, dy=0, scale=1) as her solo level-3 appearance, not just
+    // (dx=0, dy=0, scale=1) as her solo appearance, not just
     // "full size" in the abstract, so the two actually look identical in
     // size. The brothers are small and spread further apart than the
     // first attempt at this: at a bigger scale/tighter spacing they
@@ -108,22 +118,45 @@ const PREDATOR_LEVEL_ENTRIES: Omit<PredatorLevel, "level">[] = [
   },
   { kind: "swordfish", count: 1, label: "The swordfish" },
   { kind: "footballshark", count: 1, label: "The football shark" },
+  { kind: "grandpashark", count: 1, label: "The grandpa shark" },
+  {
+    kind: "grandpashark",
+    count: 2,
+    // A same-size pair, so the generic getSchoolOffsets(2) formation fits
+    // as-is (no `offsets` override, unlike the Princess's escort above).
+    // Grandpa is drawn last, on top, as the level's named lead.
+    kinds: ["footballshark", "grandpashark"],
+    label: "The grandpa shark and the football shark",
+  },
+  {
+    kind: "grandpashark",
+    count: 2,
+    // Same generic same-size pair as the football-shark level above;
+    // grandpa again drawn last, on top, as the named lead.
+    kinds: ["sharkprincess", "grandpashark"],
+    label: "The grandpa shark and the Shark Princess",
+  },
+  { kind: "megalodon", count: 1, label: "The Megalodon", isBossFight: true },
   {
     kind: "dunkleosteus",
     count: 1,
     label: "The Dunkleosteus",
     skipsReefDecor: true,
   },
-  { kind: "grandpashark", count: 1, label: "The grandpa shark" },
   { kind: "seaserpent", count: 1, label: "The sea serpent" },
   { kind: "mosasaurus", count: 1, label: "The Mosasaurus" },
   { kind: "piranha", count: 7, label: "The seven piranhas" },
-  { kind: "megalodon", count: 1, label: "The Megalodon" }, // boss fight
   { kind: "eel", count: 3, label: "The three electric eels" },
   { kind: "anglerfish", count: 1, label: "The anglerfish", skipsReefDecor: true },
-  { kind: "bloop", count: 1, label: "The Bloop", skipsReefDecor: true }, // boss fight
-  { kind: "amargasaurus", count: 1, label: "The Amargasaurus", skipsReefDecor: true },
-  { kind: "kraken", count: 1, label: "The Kraken" }, // final boss fight
+  { kind: "bloop", count: 1, label: "The Bloop", skipsReefDecor: true, isBossFight: true },
+  {
+    kind: "amargasaurus",
+    count: 1,
+    label: "The Amargasaurus",
+    skipsReefDecor: true,
+    isBossFight: true,
+  },
+  { kind: "kraken", count: 1, label: "The Kraken", isBossFight: true },
 ];
 
 export const PREDATOR_LEVELS: PredatorLevel[] = PREDATOR_LEVEL_ENTRIES.map((p, i) => ({
