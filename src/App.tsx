@@ -1,7 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import { useGame } from "./game/useGame";
 import { TOTAL_ROUNDS } from "./game/outcome";
-import { getPredatorLevel } from "./game/predators";
+import { getPredatorLevel, PREDATOR_LEVELS } from "./game/predators";
+import { slugify } from "./shared/textUtils.mjs";
 import { WORDS } from "./data/words";
 import { loadSelection, saveSelection } from "./data/wordSelection";
 import { loadMode, saveMode, type Mode } from "./data/modeSelection";
@@ -20,9 +21,27 @@ import { ResultScreen } from "./components/ResultScreen";
 import { DebugPanel } from "./components/DebugPanel";
 import { BOSS_INTROS, type BossIntro } from "./bossIntros";
 
+// Dev-server only: import.meta.env.DEV is replaced with a literal `false`
+// in `npm run build`, so production (Amplify) can't enable this from the
+// URL and the debug code is dropped from the bundle.
 const DEBUG =
+  import.meta.env.DEV &&
   typeof window !== "undefined" &&
   new URLSearchParams(window.location.search).has("debug");
+
+// `?debug=1&level=<slug>` starts the session at that level instead of the
+// first, e.g. `level=the-grandpa-shark-and-the-football-shark` -- the same
+// slugified label the defeat/victory clips are named by, so it survives a
+// level reorder. The param is slugified too, so case and spaces don't
+// matter (`level=The Megalodon` works). An unknown level falls back to the
+// first.
+function debugStartPlayCount(): number {
+  if (!DEBUG) return 0;
+  const param = new URLSearchParams(window.location.search).get("level");
+  if (!param) return 0;
+  const slug = slugify(param);
+  return Math.max(0, PREDATOR_LEVELS.findIndex((p) => slugify(p.label) === slug));
+}
 
 export default function App() {
   const game = useGame();
@@ -47,7 +66,7 @@ export default function App() {
   // Session-only: escalates the antagonist each time a game is actually
   // started (including the very first), then cycles back after the Kraken.
   // Not persisted -- reloading the page resets it, unlike the word selection.
-  const [playCount, setPlayCount] = useState(0);
+  const [playCount, setPlayCount] = useState(debugStartPlayCount);
   const predator = getPredatorLevel(playCount || 1);
   const nextPredator = getPredatorLevel(playCount + 1);
 

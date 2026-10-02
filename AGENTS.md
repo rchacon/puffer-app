@@ -101,7 +101,12 @@ npm run audio:gen   # regenerate public/audio/ (needs network)
 npm run screenshot  # drive the running dev server, save screenshots/*.png
 ```
 
-`?debug=1` on the URL adds an overlay that jumps straight to each ending.
+`?debug=1` on the URL (dev server only -- gated on `import.meta.env.DEV`,
+so a production build ignores it) adds an overlay that jumps straight to
+each ending. Add
+`&level=<slug>` (a level's slugified label, e.g.
+`the-grandpa-shark-and-the-football-shark`) to start the session at that
+level instead of the first.
 
 ## Checking what's deployed
 
