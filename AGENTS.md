@@ -190,7 +190,7 @@ persisted) -- unlike the word selection, reloading the page resets it to
 the first level.
 
 The Shark Princess's escort ("The Shark Princess and her two brothers")
-is the one level that mixes creatures instead of rendering `count`
+was the first level to mix creatures instead of rendering `count`
 copies of one `kind` -- two `PredatorLevel` fields exist just for this:
 `kinds` (per-instance kind, same length as `count`) and `offsets`
 (per-instance position/scale, overriding the generic same-size
@@ -964,6 +964,15 @@ point on. Anchored at the leftmost point of the whole composition
 instead (the newspaper's own top-left corner), same technique as the
 Swordfish's bill tip when the mouth itself isn't the visual "front" of
 a predator.
+
+The grandpa shark also gets a second, mixed-kind level right after its
+solo one: "The grandpa shark and the football shark" (`count: 2`,
+`kinds: ["footballshark", "grandpashark"]`). Unlike the Shark
+Princess's escort, the two are meant to read as equals, so there's no
+`offsets` override -- the generic same-size `getSchoolOffsets(2)` pair
+the two-shark level uses fits as-is. Grandpa is last in `kinds`, so he
+draws on top. Its own `defeat-`/`victory-` clips were generated as a
+one-off like the Swordfish's.
 
 The `SeaSerpent` is inserted right before the Mosasaurus in play order
 -- like the Swordfish/FootballShark/GrandpaShark, it's a plain

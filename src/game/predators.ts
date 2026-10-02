@@ -43,13 +43,15 @@ export interface PredatorLevel {
    *  is the one `kinds` doesn't need to repeat for every instance. */
   kind: PredatorKind;
   /** How many instances BattleScene renders (only >1 for a school -- the
-   *  two-shark level, the Shark Princess's escort, and the piranha/eel
-   *  schools below; everything else is a solo predator). */
+   *  two-shark level, the Shark Princess's escort, the grandpa/football
+   *  shark pair, and the piranha/eel schools below; everything else is a
+   *  solo predator). */
   count: number;
   /**
    * Per-instance kind override, same length as `count`, for a level that
    * mixes creatures instead of rendering `count` copies of `kind` (the
-   * Shark Princess's two escort sharks). Omit for every plain same-kind
+   * Shark Princess's two escort sharks, the grandpa/football shark pair).
+   * Omit for every plain same-kind
    * school; BattleScene falls back to `count` copies of `kind` when this
    * isn't set.
    */
@@ -109,6 +111,15 @@ const PREDATOR_LEVEL_ENTRIES: Omit<PredatorLevel, "level">[] = [
   { kind: "swordfish", count: 1, label: "The swordfish" },
   { kind: "footballshark", count: 1, label: "The football shark" },
   { kind: "grandpashark", count: 1, label: "The grandpa shark" },
+  {
+    kind: "grandpashark",
+    count: 2,
+    // A same-size pair, so the generic getSchoolOffsets(2) formation fits
+    // as-is (no `offsets` override, unlike the Princess's escort above).
+    // Grandpa is drawn last, on top, as the level's named lead.
+    kinds: ["footballshark", "grandpashark"],
+    label: "The grandpa shark and the football shark",
+  },
   {
     kind: "dunkleosteus",
     count: 1,

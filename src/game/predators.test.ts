@@ -34,12 +34,13 @@ describe("PREDATOR_LEVELS", () => {
   });
 
   it("only the school levels have more than one instance", () => {
-    // Named by label, not level number -- these four schools' *positions*
+    // Named by label, not level number -- these schools' *positions*
     // shift as levels get reordered, but which ones are schools at all
     // doesn't, so this stays correct across a reorder without editing.
     const schoolLabels = new Set([
       "The two sharks",
       "The Shark Princess and her two brothers",
+      "The grandpa shark and the football shark",
       "The seven piranhas",
       "The three electric eels",
     ]);
