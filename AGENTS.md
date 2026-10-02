@@ -965,14 +965,17 @@ instead (the newspaper's own top-left corner), same technique as the
 Swordfish's bill tip when the mouth itself isn't the visual "front" of
 a predator.
 
-The grandpa shark also gets a second, mixed-kind level right after its
-solo one: "The grandpa shark and the football shark" (`count: 2`,
+The grandpa shark also gets mixed-kind levels right after its solo
+one. First, "The grandpa shark and the football shark" (`count: 2`,
 `kinds: ["footballshark", "grandpashark"]`). Unlike the Shark
 Princess's escort, the two are meant to read as equals, so there's no
 `offsets` override -- the generic same-size `getSchoolOffsets(2)` pair
 the two-shark level uses fits as-is. Grandpa is last in `kinds`, so he
-draws on top. Its own `defeat-`/`victory-` clips were generated as a
-one-off like the Swordfish's.
+draws on top. A second pairing follows it the same way, "The grandpa
+shark and the Shark Princess" (`kinds: ["sharkprincess",
+"grandpashark"]`, same generic pair formation, grandpa again on top).
+Both levels' `defeat-`/`victory-` clips were generated as one-offs like
+the Swordfish's.
 
 The `SeaSerpent` is inserted right before the Mosasaurus in play order
 -- like the Swordfish/FootballShark/GrandpaShark, it's a plain

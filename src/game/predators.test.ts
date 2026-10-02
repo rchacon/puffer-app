@@ -41,6 +41,7 @@ describe("PREDATOR_LEVELS", () => {
       "The two sharks",
       "The Shark Princess and her two brothers",
       "The grandpa shark and the football shark",
+      "The grandpa shark and the Shark Princess",
       "The seven piranhas",
       "The three electric eels",
     ]);
