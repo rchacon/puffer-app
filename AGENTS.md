@@ -58,8 +58,8 @@ library &mdash; a `useReducer` state machine and hand-written inline SVG.
   whatever `activeMusic` previously pointed to if it differs, so a previous
   game's different track can't keep playing underneath the new one.
   `App.tsx` plays one of two tracks on loop during every level's rounds,
-  picked by `predator.kind`: the boss tracks' shared
-  `src/assets/ebunny-ocean.mp3` for any kind in `BOSS_INTROS`, or
+  picked by the level's `isBossFight` flag: the boss tracks' shared
+  `src/assets/ebunny-ocean.mp3` for a boss-fight level, or
   `src/assets/skidnney-arcade-game-bgm.mp3` for every other (plain)
   predator's rounds (both user-provided, ~5.4MB/~3MB &mdash; provenance/license
   not verified for either, check before reusing). Starts once the round
@@ -67,7 +67,7 @@ library &mdash; a `useReducer` state machine and hand-written inline SVG.
   plain predator) and stops on the result screen. `App.tsx` calls
   `preloadMusic` for the non-boss track unconditionally on mount (every
   session's first level is always a plain predator) but only preloads the
-  boss track once `nextPredator.kind` is actually one &mdash; not
+  boss track once `nextPredator.isBossFight` is set &mdash; not
   unconditionally on every mount, so a player who never reaches a boss
   level doesn't pay for its ~5.4MB; `nextPredator` is already known for a
   whole game's length before that level itself starts, so this still has
@@ -229,7 +229,7 @@ never mentions the predator either.
 
 The Kraken (and every time the cycle wraps back to it) gets an
 extra title-card flourish -- `App.tsx`'s `handleStart` detects it via
-`nextPredator.kind`, shows `KrakenIntro`, and plays both
+`nextPredator.isBossFight`, shows `KrakenIntro`, and plays both
 `release-the-kraken.mp3` (the voice line) and `src/assets/kraken-music.wav`
 (a quieter background sting, via the generic `playUrl()` in
 `audio/player.ts`) for ~2.1s before the round actually begins (`beginGame`).
@@ -265,10 +265,15 @@ downloaded by hand and its exact license wasn't independently re-verified --
 check that page before reusing this icon anywhere beyond this one spot.
 
 The Megalodon (and every time the cycle comes back around to it)
-is the other boss fight, added well after the Kraken's -- `App.tsx`'s
-`BOSS_INTROS` is a lookup keyed by `PredatorKind` (kraken and megalodon
-both entries) rather than another hardcoded `if` in `handleStart`, so a
-third boss just adds a row. `MegalodonIntro` follows `KrakenIntro`'s exact
+is the other boss fight, added well after the Kraken's. Which levels
+are boss fights is the `isBossFight` flag on each `PREDATOR_LEVEL_ENTRIES`
+row in `predators.ts` (per level, not per kind, so a boss creature could
+still appear in a plain level); `src/bossIntros.ts`'s `BOSS_INTROS` holds
+each boss kind's own intro card, voice line and music, keyed by
+`PredatorKind` rather than another hardcoded `if` in `handleStart`, so a
+new boss is one flagged level plus one row there. `predators.test.ts`
+checks the two can't drift apart (every flagged level's kind has an
+intro, every intro has a flagged level). `MegalodonIntro` follows `KrakenIntro`'s exact
 technique (vendored silhouette behind a title line, dark overlay makes it
 readable) but a different mood on purpose: `.megalodon-intro`'s deep
 ocean blue-black background and the text's slow `megalodonLoom` scale-in
@@ -387,7 +392,7 @@ Anglerfish's (this isn't about depth/sunlight), just a plainer seabed
 reading better at the scale this one's drawn.
 
 Unlike the Kraken/Megalodon, the Bloop's intro (`BloopIntro.tsx`) has no
-spoken voice line -- `BOSS_INTROS.bloop` in `App.tsx` omits `voiceCue`
+spoken voice line -- `BOSS_INTROS.bloop` in `bossIntros.ts` omits `voiceCue`
 (now optional on the `BossIntro` type for exactly this) because the whole
 point of this boss is the real 1997 NOAA hydrophone recording nicknamed
 "the Bloop," not a synthesized line standing in for it. `bloop-sound.wav`

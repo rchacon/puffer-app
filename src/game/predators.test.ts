@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { getInstanceKinds, getPredatorLevel, PREDATOR_LEVELS } from "./predators";
 import { getSchoolOffsets, PREDATOR_COMPONENTS } from "../components/predators";
+import { BOSS_INTROS } from "../bossIntros";
 
 describe("getPredatorLevel", () => {
   it("returns level 1 through the last level for playCount 1..N", () => {
@@ -105,5 +106,17 @@ describe("PREDATOR_LEVELS", () => {
     const offsets = escort!.offsets ?? getSchoolOffsets(escort!.count);
     expect(offsets.at(-1)!.scale).toBeGreaterThan(offsets[0].scale);
     expect(offsets.at(-1)!.scale).toBeGreaterThan(offsets[1].scale);
+  });
+
+  it("every boss-fight level has an intro, and every intro a boss-fight level", () => {
+    // isBossFight (per level) and BOSS_INTROS (per kind) are separate on
+    // purpose -- see bossIntros.ts -- so check they can't drift apart: a
+    // flagged level with no intro would get boss music but skip its title
+    // card, and an intro no flagged level uses would be dead code.
+    const bossKinds = new Set(
+      PREDATOR_LEVELS.filter((p) => p.isBossFight).map((p) => p.kind),
+    );
+    expect(bossKinds.size).toBeGreaterThan(0);
+    expect(new Set(Object.keys(BOSS_INTROS))).toEqual(bossKinds);
   });
 });

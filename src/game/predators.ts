@@ -79,6 +79,14 @@ export interface PredatorLevel {
    * reef.
    */
   skipsReefDecor?: boolean;
+  /**
+   * A boss fight: plays this kind's title-card intro (bossIntros.ts's
+   * `BOSS_INTROS`) before round 1, and the shared boss music track instead
+   * of the plain one during its rounds. Set per level, not per kind, so a
+   * boss creature can still appear in a plain level. Omit (falsy) for
+   * every plain predator.
+   */
+  isBossFight?: boolean;
 }
 
 // 1-indexed position (`PredatorLevel.level`) is computed below from
@@ -128,7 +136,7 @@ const PREDATOR_LEVEL_ENTRIES: Omit<PredatorLevel, "level">[] = [
     kinds: ["sharkprincess", "grandpashark"],
     label: "The grandpa shark and the Shark Princess",
   },
-  { kind: "megalodon", count: 1, label: "The Megalodon" }, // boss fight
+  { kind: "megalodon", count: 1, label: "The Megalodon", isBossFight: true },
   {
     kind: "dunkleosteus",
     count: 1,
@@ -140,9 +148,15 @@ const PREDATOR_LEVEL_ENTRIES: Omit<PredatorLevel, "level">[] = [
   { kind: "piranha", count: 7, label: "The seven piranhas" },
   { kind: "eel", count: 3, label: "The three electric eels" },
   { kind: "anglerfish", count: 1, label: "The anglerfish", skipsReefDecor: true },
-  { kind: "bloop", count: 1, label: "The Bloop", skipsReefDecor: true }, // boss fight
-  { kind: "amargasaurus", count: 1, label: "The Amargasaurus", skipsReefDecor: true },
-  { kind: "kraken", count: 1, label: "The Kraken" }, // final boss fight
+  { kind: "bloop", count: 1, label: "The Bloop", skipsReefDecor: true, isBossFight: true },
+  {
+    kind: "amargasaurus",
+    count: 1,
+    label: "The Amargasaurus",
+    skipsReefDecor: true,
+    isBossFight: true,
+  },
+  { kind: "kraken", count: 1, label: "The Kraken", isBossFight: true },
 ];
 
 export const PREDATOR_LEVELS: PredatorLevel[] = PREDATOR_LEVEL_ENTRIES.map((p, i) => ({
