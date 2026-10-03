@@ -19,6 +19,9 @@ right card to help a puffer fish survive a circling shark.
 
 ## Develop
 
+An npm-workspaces monorepo: the game lives in `apps/game/` (paths below are
+relative to it). The root `package.json` proxies these scripts to it.
+
 ```bash
 npm install
 npm run dev        # http://localhost:5173
