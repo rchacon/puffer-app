@@ -10,6 +10,21 @@ library &mdash; a `useReducer` state machine and hand-written inline SVG.
 
 ## Layout
 
+An npm-workspaces monorepo. The game is the `@puffer-power/game` workspace
+in `apps/game/`; **every `src/`, `public/` and `scripts/` path in this file
+is relative to `apps/game/`**, not the repo root. `packages/*` will hold
+code shared with the planned parent portal (`apps/portal/`), starting with
+the Cognito account/API client. Root-level files are just the workspace
+`package.json` (whose scripts proxy to the game workspace, so the commands
+below run from the root unchanged), `amplify.yml`, and the docs.
+
+`amplify.yml` is Amplify Hosting's build spec, and it overrides the
+`build_spec` on the Amplify app in `puffer-infra`'s
+`terraform/amplify/main.tf` (a repo-root `amplify.yml` always wins). It
+publishes `apps/game/dist`. Keeping it here means a change to the build
+output path ships in the same commit as the code that causes it. Edit this
+file, not the Terraform copy, which Amplify ignores.
+
 - `src/game/` &mdash; all logic, browser-free and unit-tested:
   - `rounds.ts` &mdash; `buildRounds(count, pool)` picks targets + 2 distractors
     each; also `MIN_WORDS`.
@@ -87,11 +102,15 @@ library &mdash; a `useReducer` state machine and hand-written inline SVG.
   `localStorage["puffer-panic:mode"]`, falling back to `"easy"`.
 - `public/audio/*.mp3` &mdash; committed voice clips.
 - `public/favicon.svg` &mdash; synced by hand from `puffer-website`
-  (`../puffer-website/public/favicon.svg`, the marketing site repo) so the
+  (`../puffer-website/public/favicon.svg` relative to the repo root, the
+  marketing site repo) so the
   game and the site share a mark. Re-copy it if that file changes there.
 - `scripts/*.mjs` &mdash; zero-dependency Node tools (see Conventions).
 
 ## Commands
+
+Run from the repo root (each proxies to the game workspace), or from
+`apps/game/` directly:
 
 ```bash
 npm run dev         # http://localhost:5173

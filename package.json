@@ -1,32 +1,17 @@
 {
   "name": "puffer-power",
   "private": true,
-  "version": "0.1.0",
-  "type": "module",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
   "scripts": {
-    "dev": "vite",
-    "build": "tsc -b && vite build",
-    "postbuild": "node scripts/write-version.mjs",
-    "preview": "vite preview",
-    "test": "vitest run",
-    "test:watch": "vitest",
-    "audio:gen": "node scripts/generate-audio.mjs",
-    "screenshot": "node scripts/screenshot.mjs"
-  },
-  "dependencies": {
-    "react": "^19.3.0",
-    "react-dom": "^19.3.0"
-  },
-  "devDependencies": {
-    "@testing-library/jest-dom": "^7.0.1",
-    "@testing-library/react": "^16.3.3",
-    "@types/node": "^22.10.0",
-    "@types/react": "^19.3.0",
-    "@types/react-dom": "^19.3.0",
-    "@vitejs/plugin-react": "^6.1.1",
-    "jsdom": "^30.0.1",
-    "typescript": "^7.0.2",
-    "vite": "^8.2.2",
-    "vitest": "^5.0.0"
+    "dev": "npm run dev -w @puffer-power/game",
+    "build": "npm run build -w @puffer-power/game",
+    "preview": "npm run preview -w @puffer-power/game",
+    "test": "npm test --workspaces --if-present",
+    "test:watch": "npm run test:watch -w @puffer-power/game",
+    "audio:gen": "npm run audio:gen -w @puffer-power/game",
+    "screenshot": "npm run screenshot -w @puffer-power/game"
   }
 }
