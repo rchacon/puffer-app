@@ -18,6 +18,26 @@ the Cognito account/API client. Root-level files are just the workspace
 `package.json` (whose scripts proxy to the game workspace, so the commands
 below run from the root unchanged), `amplify.yml`, and the docs.
 
+`packages/account/` (`@puffer-power/account`) is the Cognito sign-in and
+puffer-api GraphQL client the game and portal will share. Nothing imports it
+yet; the game wires it in once puffer-infra#4 is provisioned. Its pieces:
+- **`oauth.ts`:** Managed Login via OAuth authorization code + PKCE against
+  Cognito's standard endpoints. It deliberately avoids Amplify, whose
+  redirect sign-in would load Google inside a Capacitor WebView, which
+  Google blocks. The only web/native difference is the injected
+  `AuthOpener`.
+- **`api.ts`:** a `fetch`-based client typed by hand from puffer-api's
+  `schema.graphql`.
+- **`AccountProvider.tsx`:** the `useAccount()` context. It returns `null`
+  with no provider, meaning accounts are off and the player is a guest.
+
+A failed token refresh signs the parent out only on `invalid_grant`. A
+network error keeps the session, so a kid playing offline is never signed
+out. The package ships TypeScript source with no build step, since Vite
+compiles it as part of the app that imports it. Its `npm test` runs
+`tsc --noEmit` and then vitest, and the root `npm test` runs every
+workspace's tests.
+
 `amplify.yml` is Amplify Hosting's build spec, and it overrides the
 `build_spec` on the Amplify app in `puffer-infra`'s
 `terraform/amplify/main.tf` (a repo-root `amplify.yml` always wins). It
