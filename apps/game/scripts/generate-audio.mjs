@@ -167,7 +167,7 @@ function elevenLabsProvider() {
 }
 
 const PROVIDERS = { elevenlabs: elevenLabsProvider, google: googleProvider };
-if (!(opts.provider in PROVIDERS)) {
+if (!Object.hasOwn(PROVIDERS, opts.provider)) {
   console.error(`Unknown --provider "${opts.provider}". Use: ${Object.keys(PROVIDERS).join(", ")}`);
   process.exit(1);
 }
