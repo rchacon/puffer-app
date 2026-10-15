@@ -116,7 +116,7 @@ Run from the repo root (each proxies to the game workspace), or from
 npm run dev         # http://localhost:5173
 npm test            # vitest: game logic + one App render smoke, ~1s, no browser
 npm run build       # tsc -b && vite build (+ postbuild writes dist/version.json)
-npm run audio:gen   # regenerate public/audio/ (needs network)
+npm run audio:gen   # regenerate public/audio/ (needs network + ElevenLabs key)
 npm run screenshot  # drive the running dev server, save screenshots/*.png
 ```
 
@@ -1297,11 +1297,21 @@ concerns this section is about -- everywhere else keys off `kind` or
   needed to run either directly with `node`). Don't add npm deps for tooling.
 - **Audio.** Clips are committed so the app runs offline. Regenerate with
   `npm run audio:gen` after editing `src/data/words.ts` (the script parses the
-  quoted string literals). The Google TTS endpoint returns slightly different
-  bytes every fetch, so a full regen shows every clip as modified &mdash; commit
-  only the clips you actually meant to add or remove, `git restore` the rest.
-  PyPI is unreachable in this environment; that's why audio is a Node script
-  hitting Google Translate TTS rather than Python/gTTS.
+  quoted string literals). Voiced by ElevenLabs' premade "Sarah" voice
+  (`eleven_multilingual_v2`, 64kbps mono to match the Google clips' footprint),
+  picked by ear against a few other premade female voices on the word prompts.
+  Needs `ELEVENLABS_API_KEY` in `apps/game/.env.local` (gitignored) or the
+  environment; the key only needs the text-to-speech permission. Every clip
+  spends API credits and TTS isn't byte-deterministic, so a full regen shows
+  every clip as modified &mdash; for a new word/cue/level use
+  `npm run audio:gen -- --only <clip>[,<clip>...]` (names without `.mp3`;
+  an unknown name is an error, not a silent no-op) instead of the one-off
+  `fetchTts()` calls the history above describes. `--provider google` still
+  reaches the free Google Translate TTS endpoint every clip was originally
+  generated from, but it's a different voice: there's deliberately no
+  automatic fallback to it when the key is missing, so a game never ends up
+  with a mix of the two. PyPI is unreachable in this environment; that's why
+  audio is a Node script rather than Python.
 - **SVG animation.** Put `transform-box: fill-box; transform-origin: center` on
   any group that CSS scales or rotates, or it pivots about the viewBox origin
   and flies off screen. Keyframe `transform` on an element also overrides its

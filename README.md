@@ -44,12 +44,21 @@ Spoken clips live in `public/audio/` and are committed, so the app works offline
 To regenerate them (e.g. after editing the word list in `src/data/words.ts`):
 
 ```bash
-npm run audio:gen
+npm run audio:gen                                 # every clip
+npm run audio:gen -- --only prompt-frog,correct   # just these clips
 ```
 
 The script (`scripts/generate-audio.mjs`) has no dependencies &mdash; it fetches MP3s
-from the free Google Translate TTS endpoint. It needs network access when you run
-it, not at runtime.
+from the [ElevenLabs](https://elevenlabs.io) text-to-speech API ("Sarah" voice). Put
+your key in `apps/game/.env.local` (gitignored):
+
+```
+ELEVENLABS_API_KEY=...
+```
+
+`--provider google` uses the free Google Translate TTS endpoint the game used
+before instead (no key, but a different voice &mdash; don't mix the two). It needs
+network access when you run it, not at runtime.
 
 ## Tech
 
