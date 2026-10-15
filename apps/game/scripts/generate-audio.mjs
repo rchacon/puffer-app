@@ -94,7 +94,14 @@ const allJobs = [
 
 let jobs = allJobs;
 if (opts.only !== undefined) {
-  const wanted = opts.only.split(",").map((n) => n.trim().replace(/\.mp3$/, ""));
+  const wanted = opts.only
+    .split(",")
+    .map((n) => n.trim().replace(/\.mp3$/, ""))
+    .filter(Boolean);
+  if (wanted.length === 0) {
+    console.error("--only needs at least one clip name.");
+    process.exit(1);
+  }
   const known = new Set(allJobs.map(([name]) => name));
   const unknown = wanted.filter((n) => !known.has(n));
   if (unknown.length > 0) {
