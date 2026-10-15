@@ -134,8 +134,11 @@ const ELEVENLABS_MODEL_ID = "eleven_multilingual_v2";
 function elevenLabsProvider() {
   try {
     process.loadEnvFile(new URL(".env.local", ROOT));
-  } catch {
+  } catch (err) {
     // No .env.local -- fall back to whatever is already in the environment.
+    // Anything else (unreadable file, a Node too old for loadEnvFile) would
+    // otherwise surface as a misleading "set ELEVENLABS_API_KEY" below.
+    if (err.code !== "ENOENT") throw err;
   }
   const apiKey = process.env.ELEVENLABS_API_KEY;
   if (!apiKey) {
