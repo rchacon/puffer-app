@@ -111,6 +111,10 @@ if (opts.only !== undefined) {
   jobs = allJobs.filter(([name]) => wanted.includes(name));
 }
 
+// Per request, so a stalled connection fails that clip instead of hanging
+// the whole run.
+const TIMEOUT_MS = 30_000;
+
 async function checkedMp3(res) {
   if (!res.ok) throw new Error(`HTTP ${res.status}: ${(await res.text()).slice(0, 300)}`);
   const buf = Buffer.from(await res.arrayBuffer());
@@ -126,7 +130,12 @@ function googleProvider() {
       const url =
         "https://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&tl=en&q=" +
         encodeURIComponent(text);
-      return checkedMp3(await fetch(url, { headers: { "User-Agent": "Mozilla/5.0" } }));
+      return checkedMp3(
+        await fetch(url, {
+          headers: { "User-Agent": "Mozilla/5.0" },
+          signal: AbortSignal.timeout(TIMEOUT_MS),
+        }),
+      );
     },
   };
 }
@@ -167,6 +176,7 @@ function elevenLabsProvider() {
           method: "POST",
           headers: { "xi-api-key": apiKey, "Content-Type": "application/json" },
           body: JSON.stringify({ text, model_id: ELEVENLABS_MODEL_ID }),
+          signal: AbortSignal.timeout(TIMEOUT_MS),
         }),
       );
     },
