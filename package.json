@@ -11,7 +11,7 @@
     "preview": "npm run preview -w @puffer-power/game",
     "test": "npm test --workspaces --if-present",
     "test:watch": "npm run test:watch -w @puffer-power/game",
-    "audio:gen": "npm run audio:gen -w @puffer-power/game",
+    "audio:gen": "npm run audio:gen -w @puffer-power/game --",
     "screenshot": "npm run screenshot -w @puffer-power/game"
   }
 }
