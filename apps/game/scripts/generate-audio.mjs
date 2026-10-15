@@ -173,19 +173,38 @@ const provider = PROVIDERS[opts.provider]();
 await mkdir(OUT, { recursive: true });
 console.log(`Generating ${jobs.length} clips into public/audio/ via ${provider.label} ...`);
 
-let ok = 0;
+// One retry after a pause rides out a transient rate limit or network blip.
+async function fetchWithRetry(text) {
+  try {
+    return await provider.fetchTts(text);
+  } catch {
+    await sleep(2000);
+    return provider.fetchTts(text);
+  }
+}
+
+const failed = [];
 for (const [name, text] of jobs) {
   const file = `${name}.mp3`;
   try {
-    const buf = await provider.fetchTts(text);
+    const buf = await fetchWithRetry(text);
     await writeFile(new URL(file, OUT), buf);
     process.stdout.write(`  ${file}  (${buf.length} b)\n`);
-    ok++;
   } catch (err) {
     process.stdout.write(`  ${file}  FAILED: ${err.message}\n`);
+    failed.push(name);
   }
   if (provider.delayMs) await sleep(provider.delayMs);
 }
 
-console.log(`\nDone: ${ok}/${jobs.length} clips written.`);
-if (ok !== jobs.length) process.exit(1);
+console.log(`\nDone: ${jobs.length - failed.length}/${jobs.length} clips written.`);
+if (failed.length > 0) {
+  // A failed clip keeps whatever file was there before -- possibly another
+  // provider's voice -- so don't commit until these are regenerated too.
+  console.error(
+    `\n${failed.length} clip(s) failed and still hold their previous audio.` +
+      ` Rerun just those before committing:\n` +
+      `  npm run audio:gen -- --provider ${opts.provider} --only ${failed.join(",")}`,
+  );
+  process.exit(1);
+}
